@@ -1,3 +1,4 @@
+#include "Arduino.h";
 
 #define receiverPin 7
 #define maxKartingTour 233 //Nombre de tour max par seconde du moteur

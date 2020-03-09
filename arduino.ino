@@ -1,3 +1,5 @@
+#include "Arduino.h";
+
 #define INPUTPIN 18 //Numéro de pin d'entrée (ton détecteur)
 #define OUTPUTPIN 5 //Numéro de pin de sortie (ta led)
 
