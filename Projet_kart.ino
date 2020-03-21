@@ -300,6 +300,7 @@ void setup() {
 void loop(){ 
 
   lcd.clear();
+  lcd.setCursor(0,0);
   
   //On appelle chaque fonction 
   grpBrake();
@@ -308,10 +309,9 @@ void loop(){
   grpFuel();
   grpLights();
   
-  lcd.setCursor(0,0);
   
-  //lcd.print(kmh);
-  lcd.print("km/h");
-  lcd.print("    ");
+  // //lcd.print(kmh);
+  // lcd.print("km/h");
+  // lcd.print("    ");
  
 }
