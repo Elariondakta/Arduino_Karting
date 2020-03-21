@@ -1,6 +1,6 @@
 //À modifier si on mets de chips en série (c'est pas le cas)
-#define number_of_74hc595s 1 
-#define numOfRegisterPins number_of_74hc595s * 8
+#define NUMBER_OF_CHIP 1 
+#define NUMBER_OF_PINS NUMBER_OF_CHIP * 8
 
 
 //Index de chaque chip dans l'array des chips
@@ -21,7 +21,7 @@
 
 //Groupe compte tour
 #define INPUT_PIN_TOUR 7  // Groupe compte tour
-#define maxKartingTour 233 //Nombre de tour max par seconde du moteur
+#define MAX_ENGINE_TOUR 233 //Nombre de tour max par seconde du moteur
 
 //Groupe Réservoir
 #define INPUT_PIN_FUEL 8
@@ -40,7 +40,7 @@
  */
 
 //Array de booleens (5 chip de 8 pins)
-boolean registers[5][numOfRegisterPins];
+boolean registers[5][NUMBER_OF_PINS];
 
 // Initialise les paramètres de l'écran
 LiquidCrystal_I2C lcd(0x27, 20, 4); 
@@ -81,12 +81,12 @@ int endLedBrake = 0;
 void clearRegisters(int index = -1){
   if (index == -1) {
     for (int j = 0; j < 5; j++) {
-      for (int i = numOfRegisterPins - 1; i >=  0; i--)
+      for (int i = NUMBER_OF_PINS - 1; i >=  0; i--)
         registers[j][i] = LOW;
     }
   }
   else {
-    for(int i = numOfRegisterPins - 1; i >=  0; i--){
+    for(int i = NUMBER_OF_PINS - 1; i >=  0; i--){
        registers[index][i] = LOW;
     }
   }
@@ -101,7 +101,7 @@ void writeRegisters(int index = -1){
     for (int j = 0; j < 5; j++) {
       digitalWrite(chip_pin[index][RCLK_PIN_INDEX], LOW);
  
-      for(int i = numOfRegisterPins - 1; i >=  0; i--){
+      for(int i = NUMBER_OF_PINS - 1; i >=  0; i--){
         digitalWrite(chip_pin[index][RCLK_PIN_INDEX], LOW);
      
         int val = registers[index][i];
@@ -115,7 +115,7 @@ void writeRegisters(int index = -1){
   } else {
     digitalWrite(chip_pin[index][RCLK_PIN_INDEX], LOW);
    
-    for(int i = numOfRegisterPins - 1; i >=  0; i--){
+    for(int i = NUMBER_OF_PINS - 1; i >=  0; i--){
       digitalWrite(chip_pin[index][RCLK_PIN_INDEX], LOW);
    
       int val = registers[index][i];
@@ -245,7 +245,7 @@ void grpTour() {
     Serial.print("Nombre de tour moteur : ");
     Serial.println(count);
     
-    float ratio = (float)count/(float)maxKartingTour;
+    float ratio = (float)count/(float)MAX_ENGINE_TOUR;
     
     if (ratio > 1) ratio = 1;
     int led_index = (int)(ratio*8);
@@ -276,7 +276,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  //On mets toutes les pins de chips en OUTPUT
+  //On mets toutes les pins des chips en OUTPUT
   for (int i = 0; i < 5; i++)
     for (int j = 0; j < 3; j++)
       pinMode(chip_pin[i][j], OUTPUT);
